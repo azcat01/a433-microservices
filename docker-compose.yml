@@ -8,7 +8,7 @@ services:
   item-app:
 
 # Pull the image from github packages
-    image: "ghcr.io/azcat01/item-image:v1"
+    image: "ghcr.io/azcat01/item-app:v1"
 
 # Use the port 80 to run the image
     ports:
