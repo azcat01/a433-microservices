@@ -1,0 +1,39 @@
+# Docker schema version
+version: "3.8"
+
+# The services that will be used
+services:
+
+# Using app service
+  item-app:
+
+# Pull the image from github packages
+    image: "ghcr.io/azcat01/item-image:v1"
+
+# Use the port 80 to run the image
+    ports:
+      - 80:8080
+
+# Start this service after item-db service
+    depends_on:
+      - item-db
+
+# Always restart whenever the container is stopped
+    restart: always
+
+# Using the database service
+  item-db:
+
+# Pull mongodb version 3 as the database service
+    image: mongo:3
+
+# Mount the volumes of app-db to the container
+    volumes:
+      - app-db:/data/db
+
+# Same as the app service
+    restart: always
+
+# Create/use the app-db volume
+volumes:
+  app-db:
