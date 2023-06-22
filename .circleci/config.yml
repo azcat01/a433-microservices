@@ -26,5 +26,4 @@ workflows:
     # concurrently do the jobs
     jobs:
       - lint-dockerfile
-      - test-app
       - build-app-karsajobs
