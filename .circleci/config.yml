@@ -3,7 +3,11 @@ version: 2.1
 jobs:
   lint-dockerfile:
     docker:
+<<<<<<< HEAD
       - image: cimg/base:current
+=======
+      - image: cimg/base:2023.06
+>>>>>>> fc8dac6c2b10ac13ceb4a03dc79c58d351007765
     steps:
       - checkout
       - setup_remote_docker
@@ -20,7 +24,11 @@ jobs:
           command: go test -v -short --count=1 $(go list ./...)
   build-app-karsajobs:
     docker:
+<<<<<<< HEAD
       - image: cimg/base:current
+=======
+      - image: cimg/base:2023.06
+>>>>>>> fc8dac6c2b10ac13ceb4a03dc79c58d351007765
     steps:
       - checkout
       - setup_remote_docker
