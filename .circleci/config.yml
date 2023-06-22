@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+  lint-dockerfile:
+    docker:
+      - image: cimg/base
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: 
+          command: | 
+            docker pull hadolint/hadolint
+            docker run --rm -i hadolint/hadolint < Dockerfile
+  test-app:
+    docker:
+      - image: cimg/go:1.15
+    steps:
+      - checkout
+      - run:
+          command: go test -v -short --count=1 $(go list ./...)
+  build-app-karsajobs:
+    docker:
+      - image: cimg/base
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          command: |
+            docker build -t ghcr.io/azcat01/karsajobs:latest /
+            echo $CR_PAT | docker login ghcr.io -u azcat01 --password-stdin
+            docker push ghcr.io/azcat01/karsajobs:latest
+workflows:
+  karsajobs-image:
+    jobs:
+      - lint-dockerfile
+      - test-app
+      - build-app-karsajobs
