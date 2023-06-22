@@ -20,7 +20,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: ./build_push_image_karsajobs-ui.sh # push image using script
+          command: ./build_push_image_karsajobs_ui.sh # push image using script
 workflows:
   karsajobs-image:
     # concurrently do the jobs
