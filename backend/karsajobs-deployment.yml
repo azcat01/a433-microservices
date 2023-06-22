@@ -1,0 +1,43 @@
+# Container Deployment for Backend Server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-server
+  labels:
+    app: karsajobs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      # pods for deployment
+      app: karsajobs
+      tier: backend
+  template:
+    metadata:
+      labels:
+	# the pods
+        app: karsajobs
+        tier: backend
+    spec:
+      containers:
+	# pull image from github packages
+      - name: server
+        image: ghcr.io/azcat01/karsajobs:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080 # backend server exposed port
+        env:
+          - name: APP_PORT
+            value: "8080"
+          - name: MONGO_HOST
+            value: "karsajobs-db" # using mongodb
+          - name: MONGO_USER # using credentials from mongo-secret
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ROOT_USERNAME
+          - name: MONGO_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ROOT_PASSWORD

@@ -1,0 +1,16 @@
+# Service for Backend Server
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  labels:
+    app: karsajobs
+spec:
+  ports:
+  - port: 8080
+    nodePort: 30001
+  selector:
+    app: karsajobs
+    tier: backend
+  type: NodePort
+# summary, it's for expose node port from container in order to be accesible

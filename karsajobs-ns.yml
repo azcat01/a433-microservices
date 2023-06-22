@@ -1,0 +1,7 @@
+# namespace for karsajobs app
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: karsajobs
+  labels:
+    app: karsajobs

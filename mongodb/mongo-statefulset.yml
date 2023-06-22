@@ -1,0 +1,58 @@
+# StatefulSet for MongoDB
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  labels:
+    app: karsajobs
+spec:
+  selector:
+    matchLabels:
+      # pods for statefulset
+      app: karsajobs
+      tier: backend
+  serviceName: karsajobs-db # the service refers to
+  replicas: 1 # replicas number
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: karsajobs
+        tier: backend
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+	# pull the latest mongo image
+      - image: mongo:latest
+        name: mongodb
+        ports:
+        - containerPort: 27017 # default mongo port
+          name: mongodb
+        volumeMounts:
+        - name: mongo-persistent-storage # use the storage path
+          mountPath: /data/db
+        - name: mongo-config # the config for mongodb
+          mountPath: /config
+          readOnly: true
+        - name: mongo-secret # using secret
+          mountPath: /etc/mongo-credentials
+          readOnly: true
+        env:
+	# get data from secret
+        - name: MONGO_INITDB_ROOT_USERNAME_FILE
+          value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
+        - name: MONGO_INITDB_ROOT_PASSWORD_FILE
+          value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
+      volumes:
+      - name: mongo-persistent-storage
+       persistentVolumeClaim: # set pvc
+          claimName: mongo-pvc
+      - name: mongo-config # storage path
+        configMap:
+          name: mongo-config
+          items:
+            - key: mongo.conf
+              path: mongo.conf
+      - name: mongo-secret # using secret
+        secret:
+          secretName: mongo-secret

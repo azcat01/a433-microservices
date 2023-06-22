@@ -1,0 +1,17 @@
+# Service for Frontend Server Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    app: karsajobs
+spec:
+  ports:
+  - port: 8000
+    nodePort: 30000
+    # it's the same as 8000:30000 in docker
+  selector:
+    # the pods that will be using this service
+    app: karsajobs
+    tier: frontend
+  type: NodePort
