@@ -1,41 +1,36 @@
-version: 2.1
+version: 2.1 # version of circleci
 
 jobs:
+  # hadolint to check Dockerfile best practice
   lint-dockerfile:
     docker:
-<<<<<<< HEAD
-      - image: cimg/base:current
-=======
-      - image: cimg/base:2023.06
->>>>>>> fc8dac6c2b10ac13ceb4a03dc79c58d351007765
+      - image: cimg/base:current # base image (ubuntu)
     steps:
-      - checkout
-      - setup_remote_docker
+      - checkout # check and pull from git repository
+      - setup_remote_docker # to run docker from remote machine
       - run: 
           command: | 
-            docker pull hadolint/hadolint
-            docker run --rm -i hadolint/hadolint < Dockerfile
-  test-app:
+            docker pull hadolint/hadolint # get hadolint
+            docker run --rm -i hadolint/hadolint < Dockerfile # run hadolint with Dockerfile as input
+  test-app: # testing app
     docker:
-      - image: cimg/go:1.15
+      - image: cimg/go:1.15 # use golang docker image
     steps:
       - checkout
       - run:
-          command: go test -v -short --count=1 $(go list ./...)
+          command: go test -v -short --count=1 $(go list ./...) # test app
+  # build app
   build-app-karsajobs:
     docker:
-<<<<<<< HEAD
       - image: cimg/base:current
-=======
-      - image: cimg/base:2023.06
->>>>>>> fc8dac6c2b10ac13ceb4a03dc79c58d351007765
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          command: ./build_push_image_karsajobs.sh
+          command: ./build_push_image_karsajobs.sh # push image using script
 workflows:
   karsajobs-image:
+    # concurrently do the jobs
     jobs:
       - lint-dockerfile
       - test-app
