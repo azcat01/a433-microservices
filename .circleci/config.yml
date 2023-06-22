@@ -25,10 +25,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: |
-            docker build -t ghcr.io/azcat01/karsajobs:latest .
-            echo $CR_PAT | docker login ghcr.io -u azcat01 --password-stdin
-            docker push ghcr.io/azcat01/karsajobs:latest
+          command: ./build_push_image_karsajobs.sh
 workflows:
   karsajobs-image:
     jobs:
