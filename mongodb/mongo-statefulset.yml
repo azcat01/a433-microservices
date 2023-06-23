@@ -45,7 +45,7 @@ spec:
           value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
       volumes:
       - name: mongo-persistent-storage
-       persistentVolumeClaim: # set pvc
+        persistentVolumeClaim: # set pvc
           claimName: mongo-pvc
       - name: mongo-config # storage path
         configMap:
