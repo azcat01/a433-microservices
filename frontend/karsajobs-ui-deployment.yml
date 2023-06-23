@@ -15,13 +15,13 @@ spec:
   template:
     metadata:
       labels:
-	# the pods
+        # the pods
         app: karsajobs
         tier: frontend
     spec:
       containers:
       - name: frontend-server
-	# pull image from github package
+        # pull image from github package
         image: ghcr.io/azcat01/karsajobs-ui:latest
         ports:
           - containerPort: 8000 # expose this port so that the website is accessible

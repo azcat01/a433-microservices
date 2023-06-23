@@ -22,7 +22,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-	# pull the latest mongo image
+        # pull the latest mongo image
       - image: mongo:latest
         name: mongodb
         ports:
@@ -38,7 +38,7 @@ spec:
           mountPath: /etc/mongo-credentials
           readOnly: true
         env:
-	# get data from secret
+          # get data from secret
         - name: MONGO_INITDB_ROOT_USERNAME_FILE
           value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
         - name: MONGO_INITDB_ROOT_PASSWORD_FILE

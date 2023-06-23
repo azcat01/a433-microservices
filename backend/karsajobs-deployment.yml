@@ -15,12 +15,12 @@ spec:
   template:
     metadata:
       labels:
-	# the pods
+        # the pods
         app: karsajobs
         tier: backend
     spec:
       containers:
-	# pull image from github packages
+        # pull image from github packages
       - name: server
         image: ghcr.io/azcat01/karsajobs:latest
         imagePullPolicy: IfNotPresent
